@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>免费节点 hub · 每日更新 v2ray 订阅</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --ink: #1a1a1a; --paper: #f4f6f8; --accent: #0b6e4f; --muted: #8a8f98; --card: #fff; --line: #e2e6ea; }
+  body { font-family: -apple-system, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; background: var(--paper); color: var(--ink); }
+  #app { display: flex; min-height: 100vh; }
+  header { position: fixed; top: 0; left: 280px; right: 0; z-index: 50; background: linear-gradient(180deg, #0d1f16, #143325);
+    color: #eef5f0; padding: 14px 28px; display: flex; align-items: center; gap: 14px; border-bottom: 3px solid var(--accent); }
+  header h1 { font-size: 20px; letter-spacing: 4px; }
+  header h1 .dot { color: #35d99a; }
+  header p { font-size: 12px; color: #9db8a8; margin-left: auto; text-align: right; line-height: 1.6; }
+  #sidebar { width: 280px; background: #101815; color: #cfd8d2; position: fixed; top: 0; bottom: 0; overflow-y: auto; z-index: 100; }
+  #sidebar .brand { padding: 22px 20px 16px; border-bottom: 1px solid #223128; }
+  #sidebar .brand h2 { font-size: 18px; letter-spacing: 4px; color: #eef5f0; }
+  #sidebar .brand small { font-size: 11px; color: #7d8f83; display: block; margin-top: 6px; line-height: 1.7; }
+  #dates { padding: 10px 0 40px; }
+  .date-item { display: block; padding: 13px 20px; cursor: pointer; border-left: 3px solid transparent; text-decoration: none; color: inherit; }
+  .date-item:hover { background: #182420; }
+  .date-item.active { background: #182420; border-left-color: #35d99a; }
+  .date-item .d { font-size: 16px; font-weight: bold; color: #eef5f0; }
+  .date-item .w { font-size: 12px; color: #35d99a; margin-left: 8px; }
+  .date-item .c { font-size: 12px; color: #7d8f83; margin-top: 3px; }
+  #main { margin-left: 280px; margin-top: 62px; flex: 1; max-width: 1060px; padding: 28px 32px 100px; }
+  #day-title { border-bottom: 2px solid var(--ink); padding-bottom: 12px; margin-bottom: 20px; display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  #day-title h2 { font-size: 24px; letter-spacing: 2px; }
+  #day-title span { color: var(--muted); font-size: 14px; }
+  #copy-all { margin-left: auto; background: var(--accent); color: #fff; border: none; border-radius: 8px;
+    padding: 9px 18px; font-size: 14px; cursor: pointer; }
+  #copy-all:hover { background: #095c42; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; margin-bottom: 18px; padding: 20px 22px; }
+  .card .top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+  .card .name { font-size: 18px; font-weight: bold; }
+  .badge { font-size: 12px; background: #e6f4ee; color: var(--accent); padding: 3px 10px; border-radius: 20px; }
+  .badge.warn { background: #fef3e2; color: #b7791f; }
+  .card .urlbox { display: flex; gap: 8px; margin: 10px 0; }
+  .card input.url { flex: 1; font-size: 12.5px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px;
+    background: #f8faf9; color: #333; font-family: Consolas, monospace; min-width: 0; }
+  .btn { font-size: 13px; padding: 10px 16px; border-radius: 8px; cursor: pointer; border: 1px solid var(--line); background: #fff; white-space: nowrap; }
+  .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn:hover { filter: brightness(.96); }
+  .card .meta { font-size: 13px; color: var(--muted); margin-top: 8px; line-height: 1.8; }
+  .card .meta a { color: var(--accent); }
+  .dup { font-size: 12.5px; color: #b7791f; margin-top: 6px; }
+  #loading, #empty { text-align: center; padding: 80px 20px; color: var(--muted); font-size: 15px; }
+  #menu-btn { display: none; position: fixed; top: 74px; left: 12px; z-index: 200; background: #101815; color: #eef5f0;
+    border: 1px solid #35d99a; border-radius: 8px; padding: 8px 12px; font-size: 16px; cursor: pointer; }
+  .notice { background: #fffbe8; border: 1px solid #f0df9e; border-radius: 10px; padding: 14px 18px; font-size: 13.5px;
+    color: #7a6510; margin-bottom: 20px; line-height: 1.8; }
+  footer { text-align: center; color: var(--muted); font-size: 12px; padding: 30px; line-height: 2; }
+  @media (max-width: 860px) {
+    #sidebar { transform: translateX(-100%); transition: transform .3s; }
+    #sidebar.open { transform: translateX(0); }
+    header { left: 0; } header p { display: none; }
+    #main { margin-left: 0; padding: 20px 16px 80px; }
+    #menu-btn { display: block; }
+    .card .urlbox { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<button id="menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">☰ 日期</button>
+<div id="app">
+  <nav id="sidebar">
+    <div class="brand">
+      <h2>免费节点 hub</h2>
+      <small>全网公开免费订阅 · 每日自动整理<br>重复内容自动去重</small>
+    </div>
+    <div id="dates"><div style="padding:20px;color:#7d8f83">加载中…</div></div>
+  </nav>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0">
+    <header>
+      <h1>免费节点 hub<span class="dot">·</span></h1>
+      <p>vmess / vless / ss / trojan / hysteria<br>每日更新 · 去重整理</p>
+    </header>
+    <main id="main">
+      <div class="notice">⚠️ 免费节点速度与可用性不稳定，仅供学习交流，请勿用于非法用途。订阅链接复制到 v2rayN / v2rayNG / Shadowrocket / Clash 等客户端即可使用。内容每天自动更新，不同网址但内容完全相同的订阅已自动合并去重。</div>
+      <div id="day-title" style="display:none">
+        <h2 id="day-h"></h2><span id="day-c"></span>
+        <button id="copy-all" onclick="copyAll()">复制全部订阅链接</button>
+      </div>
+      <div id="list"><div id="loading">正在加载…</div></div>
+      <footer>节点来源于网络公开分享，版权归原分享者所有。<br>本站仅做聚合整理，每日自动更新。</footer>
+    </main>
+  </div>
+</div>
+<script>
+const WEEK = ['日','一','二','三','四','五','六'];
+let dates = [], current = [];
+
+function weekday(dstr) {
+  const [y, m, d] = dstr.split('-').map(Number);
+  return '周' + WEEK[new Date(y, m - 1, d).getDay()];
+}
+function fmtDate(dstr) {
+  const [y, m, d] = dstr.split('-').map(Number);
+  return `${y}年${m}月${d}日 星期${WEEK[new Date(y, m - 1, d).getDay()]}`;
+}
+function esc(s) {
+  return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+async function init() {
+  try {
+    dates = await (await fetch('data/index.json')).json();
+  } catch (e) {
+    document.getElementById('dates').innerHTML = '<div style="padding:20px;color:#7d8f83">暂无数据</div>';
+    document.getElementById('list').innerHTML = '<div id="empty">暂无数据，等待首次抓取…</div>';
+    return;
+  }
+  document.getElementById('dates').innerHTML = dates.map(d =>
+    `<a class="date-item" data-date="${d.date}" href="#${d.date}">
+       <div><span class="d">${d.date.slice(5).replace('-', '月')}日</span><span class="w">${weekday(d.date)}</span></div>
+       <div class="c">${d.date} · ${d.count} 个订阅 · 约${d.nodes}节点</div>
+     </a>`).join('');
+  const hash = location.hash.replace('#', '');
+  const target = dates.some(d => d.date === hash) ? hash : (dates[0] && dates[0].date);
+  if (target) loadDay(target);
+  window.addEventListener('hashchange', () => { const h = location.hash.replace('#', ''); if (h) loadDay(h); });
+}
+
+async function loadDay(date) {
+  document.querySelectorAll('.date-item').forEach(e => e.classList.toggle('active', e.dataset.date === date));
+  document.getElementById('sidebar').classList.remove('open');
+  const list = document.getElementById('list');
+  list.innerHTML = '<div id="loading">正在加载…</div>';
+  document.getElementById('day-title').style.display = 'none';
+  try {
+    const r = await fetch(`data/${date}.json`);
+    if (!r.ok) throw 0;
+    current = await r.json();
+    document.getElementById('day-title').style.display = 'flex';
+    document.getElementById('day-h').textContent = fmtDate(date);
+    const nodes = current.reduce((s, e) => s + Math.max(0, e.node_count), 0);
+    document.getElementById('day-c').textContent = `${current.length} 个订阅源 · 约 ${nodes} 个节点`;
+    document.title = `${fmtDate(date)} · 免费节点 hub`;
+    list.innerHTML = current.map((e, i) => `
+      <div class="card">
+        <div class="top">
+          <span class="name">${esc(e.name)}</span>
+          ${e.node_count >= 0
+            ? `<span class="badge">约 ${e.node_count} 个节点</span>`
+            : `<span class="badge warn">节点数未知（源站限制）</span>`}
+          ${e.local_file ? `<span class="badge">本站已存档</span>` : ''}
+        </div>
+        <div class="urlbox">
+          <input class="url" id="url-${i}" readonly value="${esc(e.url)}" onclick="this.select()">
+          <button class="btn primary" onclick="copyOne(${i})">复制订阅</button>
+          ${e.local_file ? `<button class="btn" onclick="window.open('${esc(e.local_file)}','_blank')">本站 txt 存档</button>` : ''}
+        </div>
+        ${e.dup_sources && e.dup_sources.length
+          ? `<div class="dup">🔁 以下来源内容完全相同，已自动合并：${e.dup_sources.map(esc).join('、')}</div>` : ''}
+        <div class="meta">内容指纹 <code>${esc(e.hash)}</code> · 将此链接粘贴到客户端的订阅设置即可使用</div>
+      </div>`).join('');
+    window.scrollTo(0, 0);
+  } catch (e) {
+    list.innerHTML = '<div id="empty">加载失败，请稍后重试。</div>';
+  }
+}
+
+function copyText(t, okMsg) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(t).then(() => alert(okMsg)).catch(() => fallbackCopy(t, okMsg));
+  } else fallbackCopy(t, okMsg);
+}
+function fallbackCopy(t, okMsg) {
+  const ta = document.createElement('textarea');
+  ta.value = t; document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); alert(okMsg); } catch (e) { alert('复制失败，请手动复制'); }
+  document.body.removeChild(ta);
+}
+function copyOne(i) { copyText(document.getElementById('url-' + i).value, '订阅链接已复制'); }
+function copyAll() {
+  const urls = current.map(e => e.url).filter(Boolean);
+  copyText(urls.join('\n'), `已复制 ${urls.length} 个订阅链接`);
+}
+
+init();
+</script>
+</body>
+</html>
