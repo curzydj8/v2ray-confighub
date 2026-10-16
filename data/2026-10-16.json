@@ -11,8 +11,8 @@
  {
   "name": "NoMoreWalls",
   "url": "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.txt",
-  "node_count": 669,
-  "hash": "c2f73b3deeeed9ea",
+  "node_count": 678,
+  "hash": "82e8cee0762880ad",
   "local_file": "nodes/2026-10-16/nomorewalls.txt",
   "dup_sources": [],
   "dup_urls": []
@@ -20,8 +20,8 @@
  {
   "name": "openproxylist",
   "url": "https://raw.githubusercontent.com/roosterkid/openproxylist/main/V2RAY_RAW.txt",
-  "node_count": 265,
-  "hash": "4562dbfc69df1cce",
+  "node_count": 273,
+  "hash": "42c4c7b4ef26d89c",
   "local_file": "nodes/2026-10-16/openproxylist.txt",
   "dup_sources": [],
   "dup_urls": []
@@ -48,7 +48,7 @@
   "name": "Pawdroid",
   "url": "https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub",
   "node_count": 13,
-  "hash": "f715866133b2c23f",
+  "hash": "019e686d69f6739a",
   "local_file": "nodes/2026-10-16/pawdroid.txt",
   "dup_sources": [],
   "dup_urls": []
