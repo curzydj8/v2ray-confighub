@@ -6,5 +6,5 @@ cd "$(dirname "$0")"
 BASE=/opt/web-platform/applications/nodes
 rsync -rlptz --chmod=a+rX -e "ssh -F $HOME/.ssh/config" data/ --rsync-path="sudo rsync" 6ix9ine:$BASE/data/
 rsync -rlptz --chmod=a+rX -e "ssh -F $HOME/.ssh/config" nodes/ --rsync-path="sudo rsync" 6ix9ine:$BASE/nodes/
-TODAY=$(date +%F)
+TODAY=$(TZ=Asia/Shanghai date +%F)
 ssh -F $HOME/.ssh/config 6ix9ine "grep -q $TODAY $BASE/data/index.json && echo SYNC_OK $TODAY || { echo SYNC_FAIL $TODAY; exit 1; }"
