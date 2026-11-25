@@ -1,0 +1,65 @@
+[
+ {
+  "name": "ermaozi",
+  "url": "https://raw.githubusercontent.com/ermaozi/get_subscribe/main/subscribe/v2ray.txt",
+  "node_count": 573,
+  "hash": "1e3f3ee078e22ea8",
+  "local_file": "nodes/2026-11-26/ermaozi.txt",
+  "dup_sources": [],
+  "dup_urls": []
+ },
+ {
+  "name": "NoMoreWalls",
+  "url": "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.txt",
+  "node_count": 457,
+  "hash": "ac3a20c04b6853fe",
+  "local_file": "nodes/2026-11-26/nomorewalls.txt",
+  "dup_sources": [],
+  "dup_urls": []
+ },
+ {
+  "name": "openproxylist",
+  "url": "https://raw.githubusercontent.com/roosterkid/openproxylist/main/V2RAY_RAW.txt",
+  "node_count": 133,
+  "hash": "2a6e6e0e905c3c68",
+  "local_file": "nodes/2026-11-26/openproxylist.txt",
+  "dup_sources": [],
+  "dup_urls": []
+ },
+ {
+  "name": "ripaojiedian",
+  "url": "https://raw.githubusercontent.com/ripaojiedian/freenode/main/sub",
+  "node_count": 30,
+  "hash": "d560fd0763762529",
+  "local_file": "nodes/2026-11-26/ripaojiedian.txt",
+  "dup_sources": [],
+  "dup_urls": []
+ },
+ {
+  "name": "freefq",
+  "url": "https://raw.githubusercontent.com/freefq/free/master/v2",
+  "node_count": 25,
+  "hash": "0322601e21de8fb5",
+  "local_file": "nodes/2026-11-26/freefq.txt",
+  "dup_sources": [],
+  "dup_urls": []
+ },
+ {
+  "name": "Pawdroid",
+  "url": "https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub",
+  "node_count": 21,
+  "hash": "aea74a9f94d693fb",
+  "local_file": "nodes/2026-11-26/pawdroid.txt",
+  "dup_sources": [],
+  "dup_urls": []
+ },
+ {
+  "name": "NodeFree",
+  "url": "https://nodefree.githubrowcontent.com/2025/12/20251231.txt",
+  "node_count": -1,
+  "hash": "unfetched:3d1fcb",
+  "local_file": "",
+  "dup_sources": [],
+  "dup_urls": []
+ }
+]
